@@ -1,5 +1,7 @@
 # significant.nvim
 
+When you've got something significant to say.
+
 ```
                                                                                                 
  ad88888ba  88   ,ad8888ba,  888b      88        ad88                                            
@@ -12,10 +14,6 @@ Y8a     a8P 88  Y8a.    .a88 88     `8888  88   88    88 "8a,   ,aa 88,    ,88 8
  "Y88888P"  88   `"Y88888P"  88      `888  88   88    88  `"Ybbd8"' `"8bbdP"Y8 88       88  "Y888
                                                                                                 
 ```
-
-
-When you've got something significant to say.
-
 ## Requirements
 
 This plugin requires:
