@@ -48,13 +48,13 @@ NOTE: Even if you've since inserted extra lines such that the placed sign is no 
 
 ## TODO:
 
-[ ] Add explicit mechanism to extend sprites.
-[ ] Utility to stop whatever animation is on the current line.
-[ ] Add option to set sprite used after animation finishes.
-[ ] Implement principled approach to timeout - right now the animation just plays for 10000 updates.
-[ ] Add logging.
-[ ] Right now we cannot change an animation, we can only start/stop it. We should be able to change sprites.
-[ ] We do not use penlight, so maybe remove it as a dependency for now.
-[ ] Principled approach to colors
-[ ] Configuration options like default animation, default color, etc.
-[ ] Figure out what buffer/window events should kill our animations.
+- [ ] Add explicit mechanism to extend sprites.
+- [ ] Utility to stop whatever animation is on the current line.
+- [ ] Add option to set sprite used after animation finishes.
+- [ ] Implement principled approach to timeout - right now the animation just plays for 10000 updates.
+- [ ] Add logging.
+- [ ] Right now we cannot change an animation, we can only start/stop it. We should be able to change sprites.
+- [ ] We do not use penlight, so maybe remove it as a dependency for now.
+- [ ] Principled approach to colors
+- [ ] Configuration options like default animation, default color, etc.
+- [ ] Figure out what buffer/window events should kill our animations.
