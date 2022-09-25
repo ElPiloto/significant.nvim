@@ -47,18 +47,17 @@ local function make_loading_signs(animation_name)
   return sign_names
 end
 
-function M._start_timer(loader_type, repeat_delay, sign_place_fn, bufnr, sign_id)
+function M._start_timer(animation_name, repeat_delay, sign_place_fn, bufnr, sign_id)
   if not vim.tbl_isempty(M._timers_by_bufnr[bufnr][sign_id]) then
-    print('Add option to force override timer.')
-    print('Aborting')
+    print('Aborting. TODO: Add option to force override timer.')
     --TODO(ElPiloto): Add log message saying we're not turning timer on b/c already on.
     return false
   end
   if not repeat_delay then
     repeat_delay = 50
   end
-  if loader_type then
-    M._animation_signs[bufnr][sign_id] = make_loading_signs(loader_type)
+  if animation_name then
+    M._animation_signs[bufnr][sign_id] = make_loading_signs(animation_name)
   end
   local timer = loop.new_timer()
   local frames = M._animation_signs[bufnr][sign_id]
@@ -68,7 +67,8 @@ function M._start_timer(loader_type, repeat_delay, sign_place_fn, bufnr, sign_id
     count = count + 1
     local should_stop = M._should_stop_timers_by_bufnr[bufnr][sign_id]
     if count > 10000 or should_stop then
-      --Go back to default sign.
+      --Go back to first sign, this doesn't seem to work consistently (or at
+      --all).
       local sign_name = frames[1]
       timer:close()
       sign_place_fn(sign_name, true)
