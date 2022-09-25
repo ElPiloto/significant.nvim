@@ -24,6 +24,9 @@ local text_hls = {
   'markdownH1',
   'markdownH2',
 }
+text_hls = {
+  'markdownH2',
+}
 
 local function make_loading_signs(animation_name)
   local frames = sprites[animation_name]
@@ -71,14 +74,14 @@ function M._start_timer(loader_type, repeat_delay, sign_place_fn, bufnr, sign_id
       --Go back to default sign.
       local sign_name = frames[1]
       timer:close()
-      sign_place_fn(sign_name, false)
+      sign_place_fn(sign_name, true)
       M._should_stop_timers_by_bufnr[bufnr][sign_id] = false
       M._timers_by_bufnr[bufnr][sign_id] = nil
     end
     local sign_name = frames[(count % #frames)+1]
     --Specify line number on first invocation only, for the subsequent
     --invocations we want to update the sign regardless of the line.
-    local update_existing_sign = count == 1
+    local update_existing_sign = count ~= 1
     sign_place_fn(sign_name, update_existing_sign)
   end
 
