@@ -24,9 +24,6 @@ local text_hls = {
   'markdownH1',
   'markdownH2',
 }
-text_hls = {
-  'markdownH2',
-}
 
 local function make_loading_signs(animation_name)
   local frames = sprites[animation_name]

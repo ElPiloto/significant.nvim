@@ -14,6 +14,9 @@ Y8a     a8P 88  Y8a.    .a88 88     `8888  88   88    88 "8a,   ,aa 88,    ,88 8
  "Y88888P"  88   `"Y88888P"  88      `888  88   88    88  `"Ybbd8"' `"8bbdP"Y8 88       88  "Y888
                                                                                                 
 ```
+
+![Demo of animation](https://user-images.githubusercontent.com/629190/192168757-00c055e1-4cdd-4a6a-9d2a-2597dffb6d6b.mov)
+
 ## Requirements
 
 This plugin requires:
@@ -42,6 +45,11 @@ Place the 'dots4' animation on line 10 with a delay of 300ms between updates.
 Stop the previously placed animation at line 10.
 ```
 :lua require('significant').stop_animated_sign(10)
+```
+
+Check out the demo:
+```
+:lua require('significant.demo')
 ```
 
 NOTE: Even if you've since inserted extra lines such that the placed sign is no longer on line 10, you **still** need to refer to it as line 10.
