@@ -1,7 +1,5 @@
 local M = {}
-local api = vim.api
 local loop = vim.loop
-local pl = require('pl.import_into')()
 local sprites = require('significant.sprites')
 local utils = require('significant.utils')
 

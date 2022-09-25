@@ -17,23 +17,13 @@ Y8a     a8P 88  Y8a.    .a88 88     `8888  88   88    88 "8a,   ,aa 88,    ,88 8
 
 https://user-images.githubusercontent.com/629190/192169786-64f47935-4aa0-4dac-bfd4-2fc28818afe4.mov
 
-## Requirements
-
-This plugin requires:
-* packer.nvim
-* penlight luarocks
-
-You can use another package manager as long as you make sure you've got
-penlight luarocks installed and available in lua's `package.path`.
-
 ## Installation Via Packer
 
 ```
-  use {
-  	'ElPiloto/significant.nvim',
-	rocks = {{'penlight', version = '1.13.1'}}
-  }
+  use {'ElPiloto/significant.nvim'}
 ```
+
+Should work fine to install via another method.
 
 ## Usage
 
@@ -47,12 +37,13 @@ Stop the previously placed animation at line 10.
 :lua require('significant').stop_animated_sign(10)
 ```
 
+NOTE: Even if you've since inserted extra lines such that the placed sign is no longer on line 10, you **still** need to refer to it as line 10.
+
 Check out the demo:
 ```
 :lua require('significant.demo')
 ```
 
-NOTE: Even if you've since inserted extra lines such that the placed sign is no longer on line 10, you **still** need to refer to it as line 10.
 
 ## TODO:
 
