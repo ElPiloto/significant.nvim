@@ -35,6 +35,18 @@ Place the 'dots4' animation on line 10 with a delay of 300ms between updates.
 Stop the previously placed animation at line 10.
 ```
 :lua require('significant').stop_animated_sign(10)
+
+```
+
+Stop and remove the previously placed animation at line 10.
+```
+:lua require('significant').stop_animated_sign(10, {unplace_sign=true})
+```
+
+Stop and replace the previously placed animation at line 10 with a custom sign like "✓"
+```
+:lua vim.fn.sign_define('YourSign', {text = '✓'})
+:lua require('significant').stop_animated_sign(10, {unplace_sign=false, sign_name='YourSign' })
 ```
 
 NOTE: Even if you've since inserted extra lines such that the placed sign is no longer on line 10, you **still** need to refer to it as line 10.
@@ -49,11 +61,11 @@ Check out the demo:
 
 - [ ] Add explicit mechanism to extend sprites.
 - [ ] Utility to stop whatever animation is on the current line.
-- [ ] Add option to set sprite used after animation finishes.
+- [X] Add option to set sprite used after animation finishes.
 - [ ] Implement principled approach to timeout - right now the animation just plays for 10000 updates.
 - [ ] Add logging.
 - [ ] Right now we cannot change an animation, we can only start/stop it. We should be able to change sprites.
-- [ ] We do not use penlight, so maybe remove it as a dependency for now.
+- [X] We do not use penlight, so maybe remove it as a dependency for now.
 - [ ] Principled approach to colors
 - [ ] Configuration options like default animation, default color, etc.
 - [ ] Figure out what buffer/window events should kill our animations.

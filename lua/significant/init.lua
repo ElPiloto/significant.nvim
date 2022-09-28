@@ -63,14 +63,33 @@ function M._start_timer(animation_name, repeat_delay, sign_place_fn, bufnr, sign
 
   local function on_interval()
     count = count + 1
-    local should_stop = M._should_stop_timers_by_bufnr[bufnr][sign_id]
+
+    local should_stop = M._should_stop_timers_by_bufnr[bufnr][sign_id]['should_stop']
+    local stop_options = M._should_stop_timers_by_bufnr[bufnr][sign_id]['stop_options']
     if count > 10000 or should_stop then
-      --Go back to first sign, this doesn't seem to work consistently (or at
-      --all).
-      local sign_name = frames[1]
       timer:close()
-      sign_place_fn(sign_name, true)
-      M._should_stop_timers_by_bufnr[bufnr][sign_id] = false
+
+      local finish_fn = nil
+      if stop_options and stop_options['unplace_sign'] then
+          finish_fn = function()
+            local sign_group = stop_options['sign_group'] or ''
+            vim.fn.sign_unplace(sign_group, {buffer=bufnr, id=sign_id})
+          end
+
+      elseif stop_options and stop_options['sign_name'] then
+          finish_fn = function()
+            sign_place_fn(stop_options['sign_name'], true)
+          end
+
+      else
+        --Go back to first sign.
+        local sign_name = frames[1]
+        finish_fn = function()
+          sign_place_fn(sign_name, true)
+        end
+      end
+      vim.defer_fn(finish_fn, 100)
+      M._should_stop_timers_by_bufnr[bufnr][sign_id]['should_stop'] = false
       M._timers_by_bufnr[bufnr][sign_id] = nil
     end
     local sign_name = frames[(count % #frames)+1]
@@ -82,8 +101,21 @@ function M._start_timer(animation_name, repeat_delay, sign_place_fn, bufnr, sign
 
   local launch_delay_ms = 500
   table.insert(M._timers_by_bufnr[bufnr][sign_id], true)
-  M._should_stop_timers_by_bufnr[bufnr][sign_id] = false
+  M._should_stop_timers_by_bufnr[bufnr][sign_id]['should_stop'] = false
   timer:start(launch_delay_ms, repeat_delay, vim.schedule_wrap(on_interval))
+end
+
+function M.animate_existing_sign(sign_id, sign_group, animation_name, delay_ms)
+  local bufnr = vim.api.nvim_get_current_buf()
+  local function sign_placer(sign_name)
+      vim.fn.sign_place(
+        sign_id,
+        sign_group,
+        sign_name,
+        bufnr
+      )
+  end
+  M._start_timer(animation_name, delay_ms, sign_placer, bufnr, sign_id)
 end
 
 function M.start_animated_sign(lnum, animation_name, delay_ms)
@@ -99,7 +131,6 @@ function M.start_animated_sign(lnum, animation_name, delay_ms)
         {lnum=lnum, priority=100}
       )
     else
-      --Update sign
       vim.fn.sign_place(
         sign_id,
         '',
@@ -111,13 +142,17 @@ function M.start_animated_sign(lnum, animation_name, delay_ms)
   M._start_timer(animation_name, delay_ms, sign_placer, bufnr, sign_id)
 end
 
-function M.stop_animated_sign(lnum, bufnr)
+function M.stop_animated_sign(lnum, stop_options, bufnr)
   if not lnum and #M._timers_by_bufnr == 1 then
     print('Could maybe infer which buffer to stop, but not implemented yet.')
     return
   end
   bufnr = bufnr or vim.api.nvim_get_current_buf()
-  M._should_stop_timers_by_bufnr[bufnr][lnum] = true
+  M._should_stop_timers_by_bufnr[bufnr][lnum] = {
+    should_stop = true,
+    stop_options = stop_options,
+  }
+  --M._should_stop_timers_by_bufnr[bufnr][lnum] = true
 end
 
 return M
